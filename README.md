@@ -1,1 +1,1 @@
-# tic-tac-toe-v2
+# Retried making tic tac toe. This time with no tutorials!
