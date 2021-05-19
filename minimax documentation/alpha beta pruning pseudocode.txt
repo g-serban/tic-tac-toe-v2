@@ -1,0 +1,34 @@
+function minimax(position, depth, alpha, beta, maximixing_player):
+    if depth == 0 or game over in position:
+        return static evalution of position
+
+    if maximizing_player:
+        maxEval = -infinity
+
+	for each child (possible move) of position:
+	    eval = minimax(child, depth - 1, alpha, beta, false)  -> recursive call
+	    maxEval = max(maxEval, eval)
+	    alpha = max(alpha, eval)
+
+	    if beta <= alpha:
+		break
+
+	return maxEval
+
+
+    else:
+	minEval = + infinity
+
+	for each child of position:
+	    eval = minimax(child, depth - 1, alpha, beta, true)  -> recursive call
+	    minEval = min(minEval, eval)
+	    beta = min(beta, eval)
+	    alpha = max(alpha, eval)
+
+	    if beta <= alpha:
+		break
+	return minEval
+
+# initial call
+minimax(current_position, 3, true)
+

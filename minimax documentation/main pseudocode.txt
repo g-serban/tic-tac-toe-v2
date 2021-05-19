@@ -1,0 +1,59 @@
+ This function evaluates all the available moves using minimax() and then returns the best move the maximizer can make.
+
+function findBestMove(board):
+    bestMove = NULL
+    for each move in board :
+        if current move is better than bestMove
+            bestMove = current move
+    return bestMove
+
+
+
+To check whether or not the current move is better than the best move we take the help of minimax() function which will consider all the possible ways the game can go and returns the best value for that move.
+
+
+function minimax(board, depth, isMaximizingPlayer):
+
+    if current board state is a terminal state :
+        return value of the board
+    
+    if isMaximizingPlayer :
+        bestVal = -INFINITY 
+        for each move in board :
+            value = minimax(board, depth+1, false)
+            bestVal = max( bestVal, value) 
+        return bestVal
+
+    else :
+        bestVal = +INFINITY 
+        for each move in board :
+            value = minimax(board, depth+1, true)
+            bestVal = min( bestVal, value) 
+        return bestVal
+
+
+
+To check whether the game is over and to make sure there are no moves left we use isMovesLeft() function. 
+
+function isMovesLeft(board):
+    for each cell in board:
+        if current cell is empty:
+            return true
+    return false
+
+
+One final step is to make our AI a little bit smarter. Even though the following AI plays perfectly, it might choose to make a move which will result in a slower victory or a faster loss.
+
+How to fix this?:
+    Move A will have a value of +10 – 2 = 8
+    Move B will have a value of +10 – 4 = 6
+
+where 2 and 4 are the depth of the move
+
+Now since move A has a higher score compared to move B our AI will choose move A over move B. The same thing must be applied to the minimizer.
+
+if maximizer has won:
+    return WIN_SCORE – depth
+
+else if minimizer has won:
+    return LOOSE_SCORE + depth
