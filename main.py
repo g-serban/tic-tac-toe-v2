@@ -99,7 +99,7 @@ def player_move(brd, letter):
         print('Something went wrong. Try again!')
 
 
-def computer_move(brd, computer_letter):  # TODO instead of having a random move, try to make te computer move smarter!
+def computer_move(brd, computer_letter):  # TODO instead of having a random move, try to make the computer move smarter!
     random_move = randrange(0, 9)
 
     for i in list(range(len(brd))):

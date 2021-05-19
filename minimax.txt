@@ -1,0 +1,58 @@
+Backtracking is a general algorithm for finding all (or some) solutions to some computational problems, notably constraint satisfaction problems, that incrementally builds candidates to the solutions, and abandons a candidate ("backtracks") as soon as it determines that the candidate cannot possibly be completed to a valid solution
+
+
+MiniMax algorithm comes into play when two intelligent adversaries A and B are trying to win.
+Each adversary tries to maximize its winning chances and minimize the opponent's chances.
+
+
+In planning its next move, A will the following points in consideration:
+
+    A will choose the node offering maximum value to A. Thus A acts like a maximizer.
+    B will choose the node offering minimum value to A. Thus B acts like a minimizer. 
+
+
+
+It is interesting to consider why would B focus more on minimizing the value of A rather than maximizing its own value?
+And the answer is that B does not actually do that!
+B is only assumed to play the role of a minimizer by A because A wants to prepare for the worst case scenario.
+If A is able to handle the worst case scenario of B playing as a minimizer, then all other cases where B plays to maximize his own value will be automatically handled.
+
+-------------------------------
+
+
+In Minimax the two players are called maximizer and minimizer. 
+The maximizer tries to get the highest score possible while the minimizer tries to do the opposite and get the lowest score possible.
+
+
+Every board state has a value associated with it. In a given state if the maximizer has upper hand then, the score of the board will tend to be some positive value. If the minimizer has the upper hand in that board state then it will tend to be some negative value. The values of the board are calculated by some heuristics which are unique for every type of game.
+
+
+import math
+ 
+def minimax (curDepth, nodeIndex,
+             maxTurn, scores,
+             targetDepth):
+ 
+    # base case : targetDepth reached
+    if (curDepth == targetDepth):
+        return scores[nodeIndex]
+     
+    if (maxTurn):
+        return max(minimax(curDepth + 1, nodeIndex * 2,
+                    False, scores, targetDepth),
+                   minimax(curDepth + 1, nodeIndex * 2 + 1,
+                    False, scores, targetDepth))
+     
+    else:
+        return min(minimax(curDepth + 1, nodeIndex * 2,
+                     True, scores, targetDepth),
+                   minimax(curDepth + 1, nodeIndex * 2 + 1,
+                     True, scores, targetDepth))
+     
+# Driver code
+scores = [3, 5, 2, 9, 12, 5, 23, 23]
+ 
+treeDepth = math.log(len(scores), 2)
+ 
+print("The optimal value is : ", end = "")
+print(minimax(0, 0, True, scores, treeDepth))
