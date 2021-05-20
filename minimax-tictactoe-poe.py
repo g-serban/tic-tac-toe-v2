@@ -1,6 +1,6 @@
 
 
-player, opponent = 'x', '0'
+player, opponent = 'x', 'o'
 
 
 def are_moves_left(brd):
@@ -8,8 +8,7 @@ def are_moves_left(brd):
     for list in brd:
         for element in list:
 
-            if element == ' ':
-
+            if element == '_':
                 return True
 
     return False
@@ -43,21 +42,20 @@ def evaluate(b):
 
     # Checking for Diagonals for X or O victory.
     if (b[0][0] == b[1][1]) and (b[1][1] == b[2][2]):
-        if b[0][0] == player:
+        if b[0][0] == player or b[1][1] == player or b[2][2] == player:
 
             return 10
 
-        elif b[0][0] == opponent:
+        elif b[0][0] == opponent or b[1][1] == opponent or b[2][2] == opponent:
 
             return -10
 
-    if (b[0][2] == b[1][1]) and (b[1][1] == b[2][0]):
-
-        if b[0][2] == player:
+    elif (b[0][2] == b[1][1]) and (b[1][1] == b[2][0]):
+        if b[0][2] == player or b[1][1] == player or b[0][2] == player:
 
             return 10
 
-        elif b[0][2] == opponent:
+        elif b[0][2] == opponent or b[1][1] == opponent or b[0][2] == opponent:
 
             return -10
 
@@ -66,33 +64,30 @@ def evaluate(b):
 
 
 # minimax function
-def minimax(board, depth, is_max):
+def minimax(board, depth, is_maximizer):
     score = evaluate(board)
 
     if score == 10:
-
         return score
 
     elif score == -10:
-
         return score
 
     elif are_moves_left(board) is False:
-
         return 0
 
-    if is_max:
+    if is_maximizer:
         best = -1000
 
         for i in range(3):
             for j in range(3):
 
-                if are_moves_left(board):
+                if board[i][j] == '_':
                     board[i][j] = player
-                    best = max(best, minimax(board, depth + 1, not is_max))
+                    best = max(best, minimax(board, depth + 1, not is_maximizer))
 
                     # undo the move
-                    board[i][j] == '_'
+                    board[i][j] = '_'
 
         return best
 
@@ -102,9 +97,9 @@ def minimax(board, depth, is_max):
         for i in range(3):
             for j in range(3):
 
-                if are_moves_left(board):
+                if board[i][j] == '_':
                     board[i][j] = opponent
-                    best = min(best, minimax(board, depth + 1, not is_max))
+                    best = min(best, minimax(board, depth + 1, not is_maximizer))
 
                     # undo the move
                     board[i][j] = '_'
@@ -122,7 +117,7 @@ def find_best_move(board):
     for i in range(3):
         for j in range(3):
 
-            if are_moves_left(board):
+            if board[i][j] == '_':
                 board[i][j] = player
                 move_val = minimax(board, 0, False)
 
@@ -140,9 +135,9 @@ def find_best_move(board):
 
 
 board = [
-    ['x', 'o', '0'],
-    ['o', 'x', '0'],
-    ['x', 'x', ' ']
+    ['x', '_', 'o'],
+    ['_', '_', '_'],
+    ['o', '_', '_']
 ]
 
 best_move = find_best_move(board)
