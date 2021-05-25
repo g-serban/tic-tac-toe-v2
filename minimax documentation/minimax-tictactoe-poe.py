@@ -76,7 +76,7 @@ def minimax(board, depth, is_maximizer):
 
                 if board[i][j] == '_':
                     board[i][j] = player
-                    best = max(best, minimax(board, depth + 1, not is_maximizer))
+                    best = max(best, (minimax(board, depth + 1, not is_maximizer) - depth))
 
                     # undo the move
                     board[i][j] = '_'
@@ -91,7 +91,7 @@ def minimax(board, depth, is_maximizer):
 
                 if board[i][j] == '_':
                     board[i][j] = opponent
-                    best = min(best, minimax(board, depth + 1, not is_maximizer))
+                    best = min(best, (minimax(board, depth + 1, not is_maximizer) + depth))
 
                     # undo the move
                     board[i][j] = '_'
@@ -101,7 +101,7 @@ def minimax(board, depth, is_maximizer):
 
 def find_best_move(board):
     best_val = -1000
-    best_move = (-1, -1)
+    move = (-1, -1)
 
     # traverse all cells, evaluate minimax function for all empty cells.
     # return cell with optimal value
@@ -118,18 +118,18 @@ def find_best_move(board):
 
                 # if value of current move is more than the best value, then update best
                 if move_val > best_val:
-                    best_move = (i, j)
+                    move = (i, j)
                     best_val = move_val
 
     print('The value of the best move is: ', best_val)
     print()
-    return best_move
+    return move
 
 
 board = [
-    ['o', 'x', 'o'],
-    ['x', 'o', '_'],
-    ['x', 'x', 'x']
+    ['o', '_', '_'],
+    ['o', 'x', '_'],
+    ['_', '_', '_']
 ]
 
 best_move = find_best_move(board)
