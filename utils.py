@@ -1,3 +1,16 @@
+
+
+def are_moves_left(brd):
+
+    for list in brd:
+        for element in list:
+
+            if element == '_':
+                return True
+
+    return False
+
+
 def evaluate(b, computer, opponent):
     # Checking for Rows for X or O victory.
     for row in range(3):
@@ -36,3 +49,46 @@ def evaluate(b, computer, opponent):
 
     # Else if none of them have won then return 0
     return 0
+
+
+def minimax(brd, depth, is_maximizer, computer, opponent):
+    score = evaluate(brd, computer, opponent)
+
+    if score == 10:
+        return 10
+
+    elif score == -10:
+        return score
+
+    elif are_moves_left(brd) is False:
+        return 0
+
+    if is_maximizer:
+        best = -1000
+
+        for i in range(3):
+            for j in range(3):
+
+                if brd[i][j] == '_':
+                    brd[i][j] = computer
+                    best = max(best, (minimax(brd, depth + 1, not is_maximizer,
+                                              computer, opponent)) - depth)
+
+                    brd[i][j] = '_'
+
+        return best
+
+    else:
+        best = 1000
+
+        for i in range(3):
+            for j in range(3):
+
+                if brd[i][j] == '_':
+                    brd[i][j] = opponent
+                    best = min(best, (minimax(brd, depth + 1, not is_maximizer,
+                                              computer, opponent)) + depth)
+
+                    brd[i][j] = '_'
+
+        return best
