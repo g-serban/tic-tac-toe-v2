@@ -1,0 +1,51 @@
+-> is an optimization technique for minimax algorithm
+
+-> it reduces the computation time by a huge factor
+
+-> it cuts off branches in the game tree which need not be searched because there already exists a better move available
+
+-> it'scalled Alpha-Beta pruning because it passes 2 extra parameters in the minimax function, namely alpha and beta
+
+
+Alpha is the best value that the -> maximizer currently can guarantee at that level or above.
+
+
+Beta is the best value that the -> minimizer currently can guarantee at that level or above.
+
+
+ leaf node = copii unui punct ( de exemplu din A avem 2 noduri: B si C, iar din B avem D si E)
+
+
+function minimax(node, depth, isMaximizingPlayer, alpha, beta):
+
+    if node is a leaf node :
+        return value of the node
+    
+    if isMaximizingPlayer :
+        bestVal = -INFINITY 
+        for each child node :
+            value = minimax(node, depth+1, false, alpha, beta)
+            bestVal = max( bestVal, value) 
+            alpha = max( alpha, bestVal)
+            if beta <= alpha:
+                break
+        return bestVal
+
+    else :
+        bestVal = +INFINITY 
+        for each child node :
+            value = minimax(node, depth+1, true, alpha, beta)
+            bestVal = min( bestVal, value) 
+            beta = min( beta, bestVal)
+            if beta <= alpha:
+                break
+        return bestVal
+
+
+
+
+
+
+
+
+
